@@ -443,7 +443,7 @@ function scheduleAutoToggleFromSearch(rawValue) {
     return;
   }
 
-  const matchedDevice = findDeviceByExactImei(normalizedQuery);
+  const matchedDevice = findDeviceByPrefixImei(normalizedQuery);
   if (!matchedDevice) {
     state.lastAutoToggleKey = "";
     return;
@@ -461,19 +461,22 @@ function scheduleAutoToggleFromSearch(rawValue) {
   }, 1000);
 }
 
-function findDeviceByExactImei(normalizedImei) {
+function findDeviceByPrefixImei(normalizedPrefix) {
+  const matches = [];
+
   for (const staff of state.data.staff) {
     for (const device of staff.devices || []) {
-      if (normalizeImei(device.imei) === normalizedImei) {
-        return {
+      const imei = normalizeImei(device.imei);
+      if (imei.startsWith(normalizedPrefix)) {
+        matches.push({
           staffId: staff.id,
-          imei: normalizedImei,
-        };
+          imei,
+        });
       }
     }
   }
 
-  return null;
+  return matches.length === 1 ? matches[0] : null;
 }
 
 function renderSeized() {
