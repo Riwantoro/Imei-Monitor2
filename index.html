@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Monitor IMEI Kerobokan</title>
+  <style>
+    :root {
+      --bg: #eff3f6;
+      --surface: #ffffff;
+      --surface-muted: #f7f9fb;
+      --line: #d7e0e7;
+      --text: #102235;
+      --muted: #557086;
+      --accent: #0f5f8c;
+      --accent-strong: #083f5f;
+      --warn: #b45309;
+      --danger: #a61b1b;
+      --ok: #1f7a4d;
+      --shadow: 0 10px 30px rgba(16, 34, 53, 0.08);
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(15, 95, 140, 0.15), transparent 28%),
+        linear-gradient(180deg, #f8fbfd 0%, #eef2f5 100%);
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+    }
+
+    .shell {
+      width: min(1180px, calc(100% - 24px));
+      margin: 20px auto;
+      display: grid;
+      gap: 16px;
+    }
+
+    .hero,
+    .panel {
+      background: var(--surface);
+      border: 1px solid rgba(215, 224, 231, 0.9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      padding: 18px;
+      display: grid;
+      gap: 16px;
+      background:
+        linear-gradient(135deg, rgba(15, 95, 140, 0.06), rgba(255, 255, 255, 0.95)),
+        var(--surface);
+    }
+
+    .hero-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand img {
+      width: 52px;
+      height: 52px;
+      object-fit: contain;
+      border-radius: 14px;
+      background: var(--surface-muted);
+      padding: 8px;
+      border: 1px solid var(--line);
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    .hero-copy h1 {
+      font-size: clamp(1.2rem, 2vw, 1.8rem);
+      line-height: 1.1;
+    }
+
+    .hero-copy p {
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .toolbar,
+    .stats,
+    .panel-head,
+    .searchbar,
+    .form-grid,
+    .list-head,
+    .record-meta,
+    .empty,
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .toolbar button,
+    .toolbar label,
+    button,
+    .file-button {
+      appearance: none;
+      border: 1px solid var(--line);
+      background: var(--surface-muted);
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 12px;
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 120ms ease;
+    }
+
+    button.primary {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    button.warn {
+      background: #fff6e8;
+      color: var(--warn);
+      border-color: #f0c98f;
+    }
+
+    button.danger {
+      background: #fff2f2;
+      color: var(--danger);
+      border-color: #efb6b6;
+    }
+
+    button:hover,
+    .file-button:hover {
+      transform: translateY(-1px);
+      border-color: #a8bfce;
+    }
+
+    .toolbar input[type="file"] {
+      display: none;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .stat {
+      background: var(--surface-muted);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px;
+    }
+
+    .stat small {
+      display: block;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .stat strong {
+      font-size: 1.5rem;
+      line-height: 1;
+    }
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 16px;
+    }
+
+    .panel {
+      padding: 16px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .panel-head {
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .panel-head p {
+      color: var(--muted);
+      font-size: 0.92rem;
+      margin-top: 4px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--surface-muted);
+      border: 1px solid var(--line);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--muted);
+    }
+
+    .badge.ok {
+      background: #edf9f2;
+      color: var(--ok);
+      border-color: #b9dfca;
+    }
+
+    .badge.warn {
+      background: #fff6e8;
+      color: var(--warn);
+      border-color: #f0c98f;
+    }
+
+    .badge.danger {
+      background: #fff2f2;
+      color: var(--danger);
+      border-color: #efb6b6;
+    }
+
+    .searchbar input,
+    .searchbar select,
+    .searchbar textarea,
+    .form-grid input,
+    .form-grid select,
+    .form-grid textarea,
+    .pin-modal input {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--text);
+      border-radius: 12px;
+      padding: 11px 12px;
+      font: inherit;
+      outline: none;
+    }
+
+    textarea {
+      min-height: 88px;
+      resize: vertical;
+    }
+
+    .searchbar {
+      display: grid;
+      grid-template-columns: 1.4fr 0.8fr;
+    }
+
+    .results,
+    .records,
+    .admin-section {
+      display: grid;
+      gap: 10px;
+    }
+
+    .card,
+    .record {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--surface-muted);
+      padding: 14px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .card-top,
+    .record-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: start;
+      flex-wrap: wrap;
+    }
+
+    .card h3,
+    .record h3 {
+      font-size: 1rem;
+    }
+
+    .meta {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .device-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .device {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: #fff;
+      border: 1px solid var(--line);
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .device-code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .empty {
+      justify-content: center;
+      color: var(--muted);
+      background: var(--surface-muted);
+      border: 1px dashed var(--line);
+      border-radius: 14px;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .span-2 {
+      grid-column: span 2;
+    }
+
+    .section-title {
+      font-size: 0.96rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+
+    .admin-shell {
+      display: none;
+      gap: 14px;
+    }
+
+    .admin-shell.active {
+      display: grid;
+    }
+
+    .admin-note {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .record-meta {
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .record-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .pin-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(16, 34, 53, 0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .pin-overlay.active {
+      display: flex;
+    }
+
+    .pin-modal {
+      width: min(420px, 100%);
+      background: var(--surface);
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: 0 30px 60px rgba(16, 34, 53, 0.28);
+      display: grid;
+      gap: 14px;
+    }
+
+    .pin-modal p {
+      color: var(--muted);
+    }
+
+    .footer-note {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.85rem;
+      padding-bottom: 8px;
+    }
+
+    @media (max-width: 960px) {
+      .main-grid,
+      .stats,
+      .searchbar,
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .span-2 {
+        grid-column: span 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <section class="hero">
+      <div class="hero-top">
+        <div class="brand">
+          <img src="assets/logo1.png" alt="Logo Lapas" loading="lazy">
+          <img src="assets/logo2.png" alt="Logo Kementerian" loading="lazy">
+          <div class="hero-copy">
+            <h1>Monitor IMEI & Barang Sitaan</h1>
+            <p>Lapas Kelas IIA Kerobokan. Cepat, ringan, dan fokus audit.</p>
+          </div>
+        </div>
+        <div class="toolbar">
+          <span id="admin-status" class="badge">Mode petugas</span>
+          <button id="admin-toggle" type="button">Masuk admin</button>
+          <button id="export-btn" type="button">Export data</button>
+          <label class="file-button" for="import-input">Import data</label>
+          <input id="import-input" type="file" accept="application/json">
+        </div>
+      </div>
+      <div class="stats" id="stats"></div>
+    </section>
+
+    <main class="main-grid">
+      <section class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>Pencarian IMEI Staf</h2>
+            <p>Cari nama, jabatan, atau nomor IMEI. Sistem menandai bila IMEI ada pada daftar sitaan aktif.</p>
+          </div>
+          <span class="badge ok" id="dataset-badge">Dataset lokal aktif</span>
+        </div>
+
+        <div class="searchbar">
+          <input id="search-input" type="search" placeholder="Cari nama staf / IMEI / jabatan">
+          <select id="search-filter">
+            <option value="all">Semua status</option>
+            <option value="safe">Tidak disita</option>
+            <option value="blocked">Terindikasi sitaan</option>
+          </select>
+        </div>
+
+        <div class="results" id="staff-results"></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>Register HP Sitaan</h2>
+            <p>Catat waktu sita, petugas, IMEI, model perangkat, dan lokasi penyimpanan.</p>
+          </div>
+          <span class="badge warn" id="seized-badge">Audit aktif</span>
+        </div>
+
+        <form id="seized-form" class="form-grid">
+          <input id="seized-brand" type="text" placeholder="Merek perangkat" required>
+          <input id="seized-model" type="text" placeholder="Model / tipe perangkat" required>
+          <input id="seized-imei-1" type="text" inputmode="numeric" placeholder="IMEI 1" required>
+          <input id="seized-imei-2" type="text" inputmode="numeric" placeholder="IMEI 2 (opsional)">
+          <input id="seized-officer" type="text" placeholder="Nama petugas penanggung jawab" required>
+          <input id="seized-unit" type="text" placeholder="Unit / regu petugas" required>
+          <input id="seized-datetime" type="datetime-local" required>
+          <input id="seized-location" type="text" placeholder="Lokasi / blok penemuan" required>
+          <input id="seized-owner" type="text" placeholder="Dari siapa / kamar mana" class="span-2">
+          <input id="seized-storage" type="text" placeholder="Lokasi penyimpanan barang bukti" required>
+          <textarea id="seized-notes" class="span-2" placeholder="Keterangan kronologi, ciri fisik, atau nomor berita acara"></textarea>
+          <div class="actions span-2">
+            <button class="primary" type="submit">Simpan sitaan</button>
+            <button id="seized-reset" type="button">Bersihkan form</button>
+          </div>
+        </form>
+
+        <div class="records" id="seized-records"></div>
+      </section>
+    </main>
+
+    <section class="panel admin-shell" id="admin-shell">
+      <div class="panel-head">
+        <div>
+          <h2>Panel Admin</h2>
+          <p>Kelola staf, tambah IMEI baru, dan ubah PIN admin.</p>
+        </div>
+        <span class="badge danger">Akses terbatas</span>
+      </div>
+
+      <div class="admin-section">
+        <div class="section-title">Tambah staf baru</div>
+        <form id="staff-form" class="form-grid">
+          <input id="staff-name" type="text" placeholder="Nama staf" required>
+          <input id="staff-position" type="text" placeholder="Jabatan / fungsi" required>
+          <textarea id="staff-note" class="span-2" placeholder="Catatan tambahan (opsional)"></textarea>
+          <div class="actions span-2">
+            <button class="primary" type="submit">Tambah staf</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="admin-section">
+        <div class="section-title">Tambah IMEI ke staf</div>
+        <form id="device-form" class="form-grid">
+          <select id="device-staff" class="span-2" required></select>
+          <input id="device-label" type="text" placeholder="Label perangkat, contoh: HP Dinas 2" required>
+          <input id="device-imei" type="text" inputmode="numeric" placeholder="IMEI baru" required>
+          <input id="device-brand" type="text" placeholder="Merek / model singkat">
+          <input id="device-slot" type="number" min="1" max="4" placeholder="Slot / urutan IMEI">
+          <textarea id="device-note" class="span-2" placeholder="Catatan perangkat (opsional)"></textarea>
+          <div class="actions span-2">
+            <button class="primary" type="submit">Tambah IMEI</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="admin-section">
+        <div class="section-title">Keamanan admin</div>
+        <form id="pin-form" class="form-grid">
+          <input id="current-pin" type="password" placeholder="PIN saat ini" required>
+          <input id="next-pin" type="password" placeholder="PIN baru" required>
+          <div class="actions span-2">
+            <button class="warn" type="submit">Ganti PIN</button>
+          </div>
+        </form>
+        <p class="admin-note">PIN bawaan: <strong>123456</strong>. Ganti segera setelah pertama kali masuk.</p>
+      </div>
+    </section>
+
+    <p class="footer-note">Data tersimpan di browser perangkat ini. Export rutin untuk backup dan audit.</p>
+  </div>
+
+  <div class="pin-overlay" id="pin-overlay" aria-hidden="true">
+    <div class="pin-modal">
+      <div>
+        <h3>Masuk admin</h3>
+        <p>Masukkan PIN admin untuk membuka panel pengelolaan data.</p>
+      </div>
+      <input id="pin-input" type="password" inputmode="numeric" placeholder="PIN admin">
+      <div class="actions">
+        <button id="pin-submit" class="primary" type="button">Masuk</button>
+        <button id="pin-cancel" type="button">Batal</button>
+      </div>
+    </div>
+  </div>
+
+  <script defer src="script.js"></script>
+</body>
+</html>
