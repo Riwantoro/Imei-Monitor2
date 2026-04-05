@@ -35,6 +35,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 function cacheElements() {
   el.stats = document.getElementById("stats");
+  el.insideShell = document.getElementById("inside-shell");
   el.staffResults = document.getElementById("staff-results");
   el.searchInput = document.getElementById("search-input");
   el.searchFilter = document.getElementById("search-filter");
@@ -264,6 +265,7 @@ function computeStats() {
 
 function renderAll() {
   renderStats();
+  renderInsideOwners();
   renderStaff();
   renderSeized();
   renderAdmin();
@@ -279,6 +281,28 @@ function renderStats() {
           <small>${escapeHtml(item.label)}</small>
           <strong>${escapeHtml(item.value)}</strong>
         </div>
+      `
+    )
+    .join("");
+}
+
+function renderInsideOwners() {
+  const insideItems = getInsideOwnerEntries();
+  if (!insideItems.length) {
+    el.insideShell.innerHTML = `<div class="empty">Belum ada HP yang ditandai berada di dalam lapas.</div>`;
+    return;
+  }
+
+  el.insideShell.innerHTML = insideItems
+    .map(
+      (item) => `
+        <article class="inside-card">
+          <small>${escapeHtml(item.label)}</small>
+          <strong>${escapeHtml(item.ownerName)}</strong>
+          <div class="meta">${escapeHtml(item.position || "-")}</div>
+          <div class="device-code">${escapeHtml(item.imei)}</div>
+          <div class="meta">${escapeHtml(item.brand || "-")}</div>
+        </article>
       `
     )
     .join("");
@@ -504,6 +528,7 @@ function renderSeized() {
 function renderAdmin() {
   el.adminShell.classList.toggle("active", state.isAdmin);
   el.seizedSearchShell.classList.toggle("active", state.isAdmin);
+  el.insideShell.classList.toggle("active", state.isAdmin);
   el.adminStatus.className = `badge ${state.isAdmin ? "danger" : ""}`.trim();
   el.adminStatus.textContent = state.isAdmin ? "Mode admin aktif" : "Mode petugas";
   el.adminToggle.textContent = state.isAdmin ? "Keluar admin" : "Masuk admin";
@@ -786,6 +811,33 @@ function getInsideImeiSet() {
   return new Set(list.map(normalizeImei).filter(Boolean));
 }
 
+function getInsideOwnerEntries() {
+  const selected = getInsideImeiSet();
+  if (!selected.size) {
+    return [];
+  }
+
+  const entries = [];
+  for (const staff of state.data.staff) {
+    for (const device of staff.devices || []) {
+      const imei = normalizeImei(device.imei);
+      if (!selected.has(imei)) {
+        continue;
+      }
+
+      entries.push({
+        ownerName: staff.name,
+        position: staff.position,
+        label: device.label || "Perangkat",
+        imei,
+        brand: device.brand,
+      });
+    }
+  }
+
+  return entries.sort((a, b) => a.ownerName.localeCompare(b.ownerName, "id"));
+}
+
 function toggleInsideImei(imei) {
   const normalized = normalizeImei(imei);
   if (!normalized) {
@@ -802,5 +854,6 @@ function toggleInsideImei(imei) {
   state.data.config.insideLapasImeis = [...set];
   persist();
   renderStats();
+  renderInsideOwners();
   renderStaff();
 }
