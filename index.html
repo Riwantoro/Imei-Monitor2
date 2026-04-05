@@ -8,16 +8,18 @@
     :root {
       --bg: #eff3f6;
       --surface: #ffffff;
-      --surface-muted: #f7f9fb;
-      --line: #d7e0e7;
-      --text: #102235;
-      --muted: #557086;
-      --accent: #0f5f8c;
-      --accent-strong: #083f5f;
+      --surface-muted: #f6f8ef;
+      --line: #d6ddc7;
+      --text: #1d2a1f;
+      --muted: #5f6f63;
+      --accent: #395b38;
+      --accent-strong: #243b24;
       --warn: #b45309;
       --danger: #a61b1b;
       --ok: #1f7a4d;
-      --shadow: 0 10px 30px rgba(16, 34, 53, 0.08);
+      --info: #2f6f8f;
+      --gold: #b88a2d;
+      --shadow: 0 10px 30px rgba(36, 59, 36, 0.08);
       --radius: 18px;
     }
 
@@ -29,8 +31,9 @@
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       color: var(--text);
       background:
-        radial-gradient(circle at top right, rgba(15, 95, 140, 0.15), transparent 28%),
-        linear-gradient(180deg, #f8fbfd 0%, #eef2f5 100%);
+        radial-gradient(circle at top right, rgba(184, 138, 45, 0.18), transparent 28%),
+        radial-gradient(circle at top left, rgba(57, 91, 56, 0.12), transparent 24%),
+        linear-gradient(180deg, #fafaf5 0%, #edf1e4 100%);
     }
 
     body {
@@ -58,7 +61,7 @@
       display: grid;
       gap: 16px;
       background:
-        linear-gradient(135deg, rgba(15, 95, 140, 0.06), rgba(255, 255, 255, 0.95)),
+        linear-gradient(135deg, rgba(57, 91, 56, 0.08), rgba(255, 255, 255, 0.95)),
         var(--surface);
     }
 
@@ -172,6 +175,18 @@
       border: 1px solid var(--line);
       border-radius: 14px;
       padding: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat::after {
+      content: "";
+      position: absolute;
+      inset: auto -20px -20px auto;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: rgba(57, 91, 56, 0.08);
     }
 
     .stat small {
@@ -319,6 +334,40 @@
       flex-wrap: wrap;
     }
 
+    .device-main {
+      display: grid;
+      gap: 4px;
+    }
+
+    .device-toggle {
+      text-align: left;
+      min-width: 240px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, #fff, #f8fbf3);
+      color: var(--accent-strong);
+    }
+
+    .device-toggle::before {
+      content: "IMEI";
+      display: block;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .device-toggle.active {
+      background: linear-gradient(135deg, var(--accent), #6b8a47);
+      border-color: var(--accent);
+      color: #fff;
+      box-shadow: 0 12px 24px rgba(57, 91, 56, 0.2);
+    }
+
+    .device-toggle.active::before {
+      color: rgba(255, 255, 255, 0.72);
+    }
+
     .device-code {
       font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
       font-weight: 700;
@@ -410,6 +459,24 @@
       padding-bottom: 8px;
     }
 
+    .hint {
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .panel-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: rgba(57, 91, 56, 0.1);
+      color: var(--accent);
+      font-weight: 800;
+      margin-right: 8px;
+    }
+
     @media (max-width: 960px) {
       .main-grid,
       .stats,
@@ -432,7 +499,7 @@
           <img src="assets/logo1.png" alt="Logo Lapas" loading="lazy">
           <img src="assets/logo2.png" alt="Logo Kementerian" loading="lazy">
           <div class="hero-copy">
-            <h1>Monitor IMEI & Barang Sitaan</h1>
+            <h1>Monitor IMEI</h1>
             <p>Lapas Kelas IIA Kerobokan. Cepat, ringan, dan fokus audit.</p>
           </div>
         </div>
@@ -451,8 +518,8 @@
       <section class="panel">
         <div class="panel-head">
           <div>
-            <h2>Pencarian IMEI Staf</h2>
-            <p>Cari nama, jabatan, atau nomor IMEI. Sistem menandai bila IMEI ada pada daftar sitaan aktif.</p>
+            <h2><span class="panel-icon">I</span>Pencarian IMEI Staf</h2>
+            <p>Cari nama, jabatan, atau nomor IMEI. Klik 1x IMEI untuk menandai HP sedang berada di dalam lapas.</p>
           </div>
           <span class="badge ok" id="dataset-badge">Dataset lokal aktif</span>
         </div>
@@ -467,12 +534,13 @@
         </div>
 
         <div class="results" id="staff-results"></div>
+        <p class="hint">IMEI hanya tampil setelah pencarian diisi agar daftar tetap ringkas.</p>
       </section>
 
       <section class="panel">
         <div class="panel-head">
           <div>
-            <h2>Register HP Sitaan</h2>
+            <h2><span class="panel-icon">S</span>Register HP Sitaan</h2>
             <p>Catat waktu sita, petugas, IMEI, model perangkat, dan lokasi penyimpanan.</p>
           </div>
           <span class="badge warn" id="seized-badge">Audit aktif</span>

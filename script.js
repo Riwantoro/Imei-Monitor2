@@ -8,6 +8,7 @@ const seedState = {
     adminPinHash: null,
     version: 2,
     staffDataVersion: STAFF_DATA_VERSION,
+    insideLapasImeis: [],
     updatedAt: new Date().toISOString(),
   },
   staff: INITIAL_STAFF,
@@ -133,6 +134,11 @@ async function loadState() {
       parsed.config.adminPinHash = await hashText(DEFAULT_PIN);
     }
     parsed.config.staffDataVersion = Number(parsed.config.staffDataVersion || 0);
+    parsed.config.insideLapasImeis = Array.isArray(parsed.config.insideLapasImeis)
+      ? parsed.config.insideLapasImeis
+      : Array.isArray(parsed.config.insideLapaselectedImeis)
+      ? parsed.config.insideLapaselectedImeis
+      : [];
     parsed.staff = Array.isArray(parsed.staff) ? parsed.staff : [];
     parsed.seizedRecords = Array.isArray(parsed.seizedRecords) ? parsed.seizedRecords : [];
     migrateStaffDataset(parsed);
@@ -232,14 +238,14 @@ function getActiveSeizedMap() {
 function computeStats() {
   const totalStaff = state.data.staff.length;
   const totalDevices = state.data.staff.reduce((sum, staff) => sum + (staff.devices?.length || 0), 0);
-  const totalSeized = state.data.seizedRecords.length;
   const activeSeized = state.data.seizedRecords.filter((record) => record.status === "active").length;
+  const insideCount = getInsideImeiSet().size;
 
   return [
-    { label: "Total staf", value: totalStaff },
-    { label: "Total IMEI staf", value: totalDevices },
-    { label: "HP sitaan aktif", value: activeSeized },
-    { label: "Total log sitaan", value: totalSeized },
+    { label: "Petugas", value: totalStaff },
+    { label: "IMEI staf", value: totalDevices },
+    { label: "HP di dalam lapas", value: insideCount },
+    { label: "Sitaan aktif", value: activeSeized },
   ];
 }
 
@@ -267,7 +273,13 @@ function renderStats() {
 
 function renderStaff() {
   const query = state.query;
+  if (!query) {
+    el.staffResults.innerHTML = `<div class="empty">Mulai ketik nama, jabatan, atau IMEI untuk menampilkan hasil.</div>`;
+    el.datasetBadge.textContent = `${state.data.staff.length} staf tersimpan`;
+    return;
+  }
   const activeSeizedMap = getActiveSeizedMap();
+  const insideImeiSet = getInsideImeiSet();
   const rows = state.data.staff
     .map((staff) => {
       const devices = Array.isArray(staff.devices) ? staff.devices : [];
@@ -320,19 +332,29 @@ function renderStaff() {
             ${renderDevices
               .map((device) => {
                 const linkedRecord = activeSeizedMap.get(normalizeImei(device.imei));
+                const normalizedImei = normalizeImei(device.imei);
+                const isInside = insideImeiSet.has(normalizedImei);
                 return `
                   <div class="device">
-                    <div>
+                    <div class="device-main">
                       <div><strong>${escapeHtml(device.label || "Perangkat")}</strong></div>
                       <div class="meta">${escapeHtml(device.brand || "-")}</div>
-                      <div class="device-code">${escapeHtml(device.imei || "-")}</div>
+                      <button
+                        type="button"
+                        class="device-toggle ${isInside ? "active" : ""}"
+                        data-action="toggle-inside"
+                        data-imei="${escapeHtml(normalizedImei)}"
+                      >
+                        <span class="device-code">${escapeHtml(device.imei || "-")}</span>
+                      </button>
                     </div>
                     <div class="record-actions">
                       ${
                         linkedRecord
                           ? `<span class="badge danger">Tercatat sitaan</span>`
-                          : `<span class="badge ok">Tidak disita</span>`
+                          : `<span class="badge ok">Aman</span>`
                       }
+                      <span class="badge ${isInside ? "ok" : ""}">${isInside ? "Di dalam lapas" : "Belum dihitung"}</span>
                       ${
                         state.isAdmin
                           ? `<button type="button" data-action="remove-device" data-staff-id="${escapeHtml(
@@ -577,8 +599,17 @@ async function handlePinChange(event) {
 }
 
 function handleStaffActions(event) {
-  const button = event.target.closest("button[data-action='remove-device']");
-  if (!button || !state.isAdmin) {
+  const button = event.target.closest("button[data-action]");
+  if (!button) {
+    return;
+  }
+
+  if (button.dataset.action === "toggle-inside") {
+    toggleInsideImei(button.dataset.imei);
+    return;
+  }
+
+  if (button.dataset.action !== "remove-device" || !state.isAdmin) {
     return;
   }
 
@@ -691,4 +722,30 @@ async function handleAdminLogin() {
 
 function formValue(id) {
   return document.getElementById(id).value.trim();
+}
+
+function getInsideImeiSet() {
+  const list = Array.isArray(state.data.config?.insideLapasImeis)
+    ? state.data.config.insideLapasImeis
+    : [];
+  return new Set(list.map(normalizeImei).filter(Boolean));
+}
+
+function toggleInsideImei(imei) {
+  const normalized = normalizeImei(imei);
+  if (!normalized) {
+    return;
+  }
+
+  const set = getInsideImeiSet();
+  if (set.has(normalized)) {
+    set.delete(normalized);
+  } else {
+    set.add(normalized);
+  }
+
+  state.data.config.insideLapasImeis = [...set];
+  persist();
+  renderStats();
+  renderStaff();
 }
