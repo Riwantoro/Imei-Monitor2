@@ -256,10 +256,10 @@ function computeStats() {
   const insideCount = getInsideImeiSet().size;
 
   return [
-    { label: "Petugas", value: totalStaff },
-    { label: "IMEI staf", value: totalDevices },
-    { label: "HP di dalam lapas", value: insideCount },
-    { label: "Sitaan aktif", value: activeSeized },
+    { label: "Petugas", value: totalStaff, icon: "👤" },
+    { label: "IMEI staf", value: totalDevices, icon: "📱" },
+    { label: "HP di dalam lapas", value: insideCount, icon: "📲" },
+    { label: "Sitaan aktif", value: activeSeized, icon: "🔒" },
   ];
 }
 
@@ -278,7 +278,7 @@ function renderStats() {
     .map(
       (item) => `
         <div class="stat">
-          <small>${escapeHtml(item.label)}</small>
+          <small><span class="mini-icon">${escapeHtml(item.icon || "•")}</span>${escapeHtml(item.label)}</small>
           <strong>${escapeHtml(item.value)}</strong>
         </div>
       `
@@ -297,11 +297,11 @@ function renderInsideOwners() {
     .map(
       (item) => `
         <article class="inside-card">
-          <small>${escapeHtml(item.label)}</small>
-          <strong>${escapeHtml(item.ownerName)}</strong>
+          <small><span class="mini-icon">📱</span>${escapeHtml(item.label)}</small>
+          <strong>👤 ${escapeHtml(item.ownerName)}</strong>
           <div class="meta">${escapeHtml(item.position || "-")}</div>
-          <div class="device-code">${escapeHtml(item.imei)}</div>
-          <div class="meta">${escapeHtml(item.brand || "-")}</div>
+          <div class="device-code"># ${escapeHtml(item.imei)}</div>
+          <div class="meta">🏷 ${escapeHtml(item.brand || "-")}</div>
         </article>
       `
     )
@@ -382,16 +382,18 @@ function renderStaff() {
                         data-action="toggle-inside"
                         data-imei="${escapeHtml(normalizedImei)}"
                       >
-                        <span class="device-code">${escapeHtml(device.imei || "-")}</span>
+                        <span class="device-code">📱 ${escapeHtml(device.imei || "-")}</span>
                       </button>
                     </div>
                     <div class="record-actions">
                       ${
                         linkedRecord
-                          ? `<span class="badge danger">Tercatat sitaan</span>`
-                          : `<span class="badge ok">Aman</span>`
+                          ? `<span class="badge danger"><span class="mini-icon">⛔</span>Tercatat sitaan</span>`
+                          : `<span class="badge ok"><span class="mini-icon">✓</span>Aman</span>`
                       }
-                      <span class="badge ${isInside ? "ok" : ""}">${isInside ? "Di dalam lapas" : "Belum dihitung"}</span>
+                      <span class="badge ${isInside ? "ok" : ""}"><span class="mini-icon">📱</span>${
+                        isInside ? "Di dalam lapas" : "Belum dihitung"
+                      }</span>
                       ${
                         state.isAdmin
                           ? `<button type="button" data-action="remove-device" data-staff-id="${escapeHtml(
@@ -403,7 +405,7 @@ function renderStaff() {
                   </div>
                   ${
                     linkedRecord
-                      ? `<p class="meta">Sitaan aktif: ${escapeHtml(linkedRecord.brand)} ${escapeHtml(
+                      ? `<p class="meta">🔒 Sitaan aktif: ${escapeHtml(linkedRecord.brand)} ${escapeHtml(
                           linkedRecord.model
                         )} | Petugas: ${escapeHtml(linkedRecord.officerName)} | ${escapeHtml(
                           formatDateTime(linkedRecord.seizedAt)
@@ -483,9 +485,9 @@ function renderSeized() {
               <p class="meta">IMEI 1: <span class="device-code">${escapeHtml(record.imei1)}</span></p>
               ${record.imei2 ? `<p class="meta">IMEI 2: <span class="device-code">${escapeHtml(record.imei2)}</span></p>` : ""}
             </div>
-            <span class="badge ${record.status === "active" ? "danger" : "ok"}">${
-              record.status === "active" ? "Masih disita" : "Ditutup"
-            }</span>
+            <span class="badge ${record.status === "active" ? "danger" : "ok"}"><span class="mini-icon">${
+              record.status === "active" ? "🔒" : "✓"
+            }</span>${record.status === "active" ? "Masih disita" : "Ditutup"}</span>
           </div>
           <div class="record-meta">
             <span>${escapeHtml(formatDateTime(record.seizedAt))}</span>

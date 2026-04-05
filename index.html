@@ -190,7 +190,9 @@
     }
 
     .stat small {
-      display: block;
+      display: flex;
+      align-items: center;
+      gap: 8px;
       color: var(--muted);
       margin-bottom: 6px;
     }
@@ -483,6 +485,27 @@
       color: var(--accent);
       font-weight: 800;
       margin-right: 8px;
+    }
+
+    .mini-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      background: rgba(18, 59, 122, 0.1);
+      color: var(--accent);
+      font-size: 0.9rem;
+      flex: 0 0 auto;
+    }
+
+    .badge .mini-icon {
+      width: 18px;
+      height: 18px;
+      font-size: 0.75rem;
+      background: rgba(255, 255, 255, 0.25);
+      color: currentColor;
     }
 
     .inside-shell {
