@@ -204,7 +204,7 @@
 
     .main-grid {
       display: grid;
-      grid-template-columns: 1.2fr 1fr;
+      grid-template-columns: 1fr;
       gap: 16px;
     }
 
@@ -574,7 +574,7 @@
       <section class="panel">
         <div class="panel-head">
           <div>
-            <h2><span class="panel-icon">I</span>Pencarian IMEI Staf</h2>
+            <h2><span class="panel-icon">I</span>Pencarian IMEI</h2>
             <p>Cari nama, jabatan, atau nomor IMEI. Klik 1x IMEI untuk menandai HP sedang berada di dalam lapas.</p>
           </div>
           <span class="badge ok" id="dataset-badge">Dataset lokal aktif</span>
@@ -592,16 +592,19 @@
         <div class="results" id="staff-results"></div>
         <p class="hint">IMEI hanya tampil setelah pencarian diisi agar daftar tetap ringkas.</p>
       </section>
+    </main>
 
-      <section class="panel">
-        <div class="panel-head">
-          <div>
-            <h2><span class="panel-icon">S</span>Register Imei Hp</h2>
-            <p>Catat waktu sita, petugas, IMEI, model perangkat, dan lokasi penyimpanan.</p>
-          </div>
-          <span class="badge warn" id="seized-badge">Audit aktif</span>
+    <section class="panel admin-shell" id="admin-shell">
+      <div class="panel-head">
+        <div>
+          <h2>Panel Admin</h2>
+          <p>Kelola staf, tambah IMEI baru, dan ubah PIN admin.</p>
         </div>
+        <span class="badge danger">Akses terbatas</span>
+      </div>
 
+      <div class="admin-section">
+        <div class="section-title">Register Imei Hp</div>
         <form id="seized-form" class="form-grid">
           <input id="seized-brand" type="text" placeholder="Merek perangkat" required>
           <input id="seized-model" type="text" placeholder="Model / tipe perangkat" required>
@@ -619,8 +622,17 @@
             <button id="seized-reset" type="button">Bersihkan form</button>
           </div>
         </form>
+      </div>
 
-        <div class="searchbar admin-only" id="seized-search-shell">
+      <div class="admin-section">
+        <div class="panel-head">
+          <div>
+            <h2><span class="panel-icon">S</span>Data Sitaan</h2>
+            <p>Pencarian dan pengelolaan data IMEI yang masih atau pernah disita.</p>
+          </div>
+          <span class="badge warn" id="seized-badge">Audit aktif</span>
+        </div>
+        <div class="searchbar admin-only active" id="seized-search-shell">
           <input id="seized-search-input" type="search" placeholder="Cari IMEI sitaan / petugas / merek / lokasi">
           <select id="seized-search-filter">
             <option value="active">Masih disita</option>
@@ -629,16 +641,6 @@
           </select>
         </div>
         <div class="records" id="seized-records"></div>
-      </section>
-    </main>
-
-    <section class="panel admin-shell" id="admin-shell">
-      <div class="panel-head">
-        <div>
-          <h2>Panel Admin</h2>
-          <p>Kelola staf, tambah IMEI baru, dan ubah PIN admin.</p>
-        </div>
-        <span class="badge danger">Akses terbatas</span>
       </div>
 
       <div class="admin-section">
