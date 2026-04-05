@@ -464,6 +464,14 @@
       font-size: 0.88rem;
     }
 
+    .admin-only {
+      display: none;
+    }
+
+    .admin-only.active {
+      display: block;
+    }
+
     .panel-icon {
       display: inline-flex;
       align-items: center;
@@ -564,6 +572,14 @@
           </div>
         </form>
 
+        <div class="searchbar admin-only" id="seized-search-shell">
+          <input id="seized-search-input" type="search" placeholder="Cari IMEI sitaan / petugas / merek / lokasi">
+          <select id="seized-search-filter">
+            <option value="active">Masih disita</option>
+            <option value="all">Semua data</option>
+            <option value="released">Sudah ditutup</option>
+          </select>
+        </div>
         <div class="records" id="seized-records"></div>
       </section>
     </main>

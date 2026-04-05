@@ -20,6 +20,8 @@ const state = {
   isAdmin: false,
   query: "",
   filter: "all",
+  seizedQuery: "",
+  seizedFilter: "active",
 };
 
 const el = {};
@@ -41,6 +43,9 @@ function cacheElements() {
   el.seizedForm = document.getElementById("seized-form");
   el.seizedRecords = document.getElementById("seized-records");
   el.seizedReset = document.getElementById("seized-reset");
+  el.seizedSearchShell = document.getElementById("seized-search-shell");
+  el.seizedSearchInput = document.getElementById("seized-search-input");
+  el.seizedSearchFilter = document.getElementById("seized-search-filter");
   el.adminShell = document.getElementById("admin-shell");
   el.adminStatus = document.getElementById("admin-status");
   el.adminToggle = document.getElementById("admin-toggle");
@@ -79,6 +84,14 @@ function bindEvents() {
 
   el.seizedForm.addEventListener("submit", handleSeizedSubmit);
   el.seizedReset.addEventListener("click", () => el.seizedForm.reset());
+  el.seizedSearchInput.addEventListener("input", (event) => {
+    state.seizedQuery = normalizeText(event.target.value);
+    renderSeized();
+  });
+  el.seizedSearchFilter.addEventListener("change", (event) => {
+    state.seizedFilter = event.target.value;
+    renderSeized();
+  });
 
   el.adminToggle.addEventListener("click", () => {
     if (state.isAdmin) {
@@ -390,10 +403,44 @@ function renderStaff() {
 }
 
 function renderSeized() {
-  const records = [...state.data.seizedRecords].sort((a, b) => new Date(b.seizedAt) - new Date(a.seizedAt));
+  const query = state.seizedQuery;
+  const records = [...state.data.seizedRecords]
+    .filter((record) => {
+      if (state.seizedFilter === "active") {
+        return record.status === "active";
+      }
+      if (state.seizedFilter === "released") {
+        return record.status !== "active";
+      }
+      return true;
+    })
+    .filter((record) => {
+      if (!query) {
+        return true;
+      }
+
+      return [
+        record.brand,
+        record.model,
+        record.imei1,
+        record.imei2,
+        record.officerName,
+        record.officerUnit,
+        record.location,
+        record.ownerRef,
+        record.storageLocation,
+        record.notes,
+      ]
+        .join(" ")
+        .toLowerCase()
+        .includes(query);
+    })
+    .sort((a, b) => new Date(b.seizedAt) - new Date(a.seizedAt));
   if (!records.length) {
-    el.seizedRecords.innerHTML = `<div class="empty">Belum ada HP sitaan yang dicatat.</div>`;
-    el.seizedBadge.textContent = "Belum ada sitaan";
+    el.seizedRecords.innerHTML = `<div class="empty">${
+      state.data.seizedRecords.length ? "Tidak ada data sitaan yang cocok." : "Belum ada HP sitaan yang dicatat."
+    }</div>`;
+    el.seizedBadge.textContent = state.data.seizedRecords.length ? "Filter aktif" : "Belum ada sitaan";
     el.seizedBadge.className = "badge";
     return;
   }
@@ -434,10 +481,17 @@ function renderSeized() {
                 : ""
             }
             ${
-              state.isAdmin
+              state.isAdmin && record.status === "active"
                 ? `<button class="danger" type="button" data-action="delete-seizure" data-record-id="${escapeHtml(
                     record.id
-                  )}">Hapus</button>`
+                  )}">Hapus data sitaan</button>`
+                : ""
+            }
+            ${
+              state.isAdmin && record.status !== "active"
+                ? `<button class="danger" type="button" data-action="delete-seizure" data-record-id="${escapeHtml(
+                    record.id
+                  )}">Hapus riwayat</button>`
                 : ""
             }
           </div>
@@ -449,6 +503,7 @@ function renderSeized() {
 
 function renderAdmin() {
   el.adminShell.classList.toggle("active", state.isAdmin);
+  el.seizedSearchShell.classList.toggle("active", state.isAdmin);
   el.adminStatus.className = `badge ${state.isAdmin ? "danger" : ""}`.trim();
   el.adminStatus.textContent = state.isAdmin ? "Mode admin aktif" : "Mode petugas";
   el.adminToggle.textContent = state.isAdmin ? "Keluar admin" : "Masuk admin";
