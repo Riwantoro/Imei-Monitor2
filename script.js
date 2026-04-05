@@ -1,59 +1,16 @@
 const STORAGE_KEY = "kolase.imei-monitor.v2";
 const DEFAULT_PIN = "123456";
+const STAFF_DATA_VERSION = 2;
+const INITIAL_STAFF = Array.isArray(window.__INITIAL_STAFF__) ? window.__INITIAL_STAFF__ : [];
 
 const seedState = {
   config: {
     adminPinHash: null,
     version: 2,
+    staffDataVersion: STAFF_DATA_VERSION,
     updatedAt: new Date().toISOString(),
   },
-  staff: [
-    {
-      id: crypto.randomUUID(),
-      name: "Azwar Riwantoro",
-      position: "Minkamtib",
-      note: "",
-      createdAt: new Date().toISOString(),
-      devices: [
-        {
-          id: crypto.randomUUID(),
-          label: "HP Dinas 1",
-          imei: "351272391804507",
-          brand: "Infinix 40 Pro",
-          slot: 1,
-          note: "",
-          createdAt: new Date().toISOString(),
-        },
-        {
-          id: crypto.randomUUID(),
-          label: "HP Dinas 2",
-          imei: "356174095873157",
-          brand: "iPhone Xs",
-          slot: 2,
-          note: "",
-          createdAt: new Date().toISOString(),
-        },
-      ],
-    },
-    {
-      id: crypto.randomUUID(),
-      name: "I Nyoman Nata Suryawan",
-      position: "Minkamtib",
-      note: "",
-      createdAt: new Date().toISOString(),
-      devices: [
-        {
-          id: crypto.randomUUID(),
-          label: "HP Pribadi",
-          imei: "355913106815447",
-          brand: "Samsung Galaxy A70",
-          slot: 1,
-          note: "",
-          createdAt: new Date().toISOString(),
-        },
-      ],
-    },
-  ],
+  staff: INITIAL_STAFF,
   seizedRecords: [],
 };
 
@@ -174,16 +131,38 @@ async function loadState() {
     if (!parsed.config?.adminPinHash) {
       parsed.config = parsed.config || {};
       parsed.config.adminPinHash = await hashText(DEFAULT_PIN);
-      persist(parsed);
     }
+    parsed.config.staffDataVersion = Number(parsed.config.staffDataVersion || 0);
     parsed.staff = Array.isArray(parsed.staff) ? parsed.staff : [];
     parsed.seizedRecords = Array.isArray(parsed.seizedRecords) ? parsed.seizedRecords : [];
+    migrateStaffDataset(parsed);
+    persist(parsed);
     return parsed;
   } catch {
     const fallback = structuredClone(seedState);
     fallback.config.adminPinHash = await hashText(DEFAULT_PIN);
     persist(fallback);
     return fallback;
+  }
+}
+
+function migrateStaffDataset(data) {
+  if (!INITIAL_STAFF.length) {
+    return;
+  }
+
+  const currentVersion = Number(data.config?.staffDataVersion || 0);
+  const looksLikeOldSeed =
+    data.staff.length <= 2 &&
+    data.staff.every((staff) => ["Azwar Riwantoro", "I Nyoman Nata Suryawan"].includes(String(staff.name || "").trim()));
+
+  if (currentVersion >= STAFF_DATA_VERSION && !looksLikeOldSeed) {
+    return;
+  }
+
+  if (!data.staff.length || looksLikeOldSeed || currentVersion < STAFF_DATA_VERSION) {
+    data.staff = structuredClone(INITIAL_STAFF);
+    data.config.staffDataVersion = STAFF_DATA_VERSION;
   }
 }
 
