@@ -22,6 +22,8 @@ const state = {
   filter: "all",
   seizedQuery: "",
   seizedFilter: "active",
+  autoToggleTimer: null,
+  lastAutoToggleKey: "",
 };
 
 const el = {};
@@ -75,6 +77,7 @@ function cacheElements() {
 function bindEvents() {
   el.searchInput.addEventListener("input", (event) => {
     state.query = normalizeText(event.target.value);
+    scheduleAutoToggleFromSearch(event.target.value);
     renderStaff();
   });
 
@@ -426,6 +429,51 @@ function renderStaff() {
     : `<div class="empty">Tidak ada data yang cocok.</div>`;
 
   el.datasetBadge.textContent = `${state.data.staff.length} staf tersimpan`;
+}
+
+function scheduleAutoToggleFromSearch(rawValue) {
+  if (state.autoToggleTimer) {
+    clearTimeout(state.autoToggleTimer);
+    state.autoToggleTimer = null;
+  }
+
+  const normalizedQuery = normalizeImei(rawValue);
+  if (normalizedQuery.length < 5) {
+    state.lastAutoToggleKey = "";
+    return;
+  }
+
+  const matchedDevice = findDeviceByExactImei(normalizedQuery);
+  if (!matchedDevice) {
+    state.lastAutoToggleKey = "";
+    return;
+  }
+
+  const toggleKey = `${matchedDevice.staffId}:${matchedDevice.imei}:${normalizedQuery}`;
+  if (state.lastAutoToggleKey === toggleKey) {
+    return;
+  }
+
+  state.autoToggleTimer = setTimeout(() => {
+    toggleInsideImei(matchedDevice.imei);
+    state.lastAutoToggleKey = toggleKey;
+    state.autoToggleTimer = null;
+  }, 1000);
+}
+
+function findDeviceByExactImei(normalizedImei) {
+  for (const staff of state.data.staff) {
+    for (const device of staff.devices || []) {
+      if (normalizeImei(device.imei) === normalizedImei) {
+        return {
+          staffId: staff.id,
+          imei: normalizedImei,
+        };
+      }
+    }
+  }
+
+  return null;
 }
 
 function renderSeized() {
