@@ -7,9 +7,9 @@ const STORAGE = {
 
 const COPY = {
   id: {
-    topbarTitle: "WCPP 2026 • Bali Booklet",
+    topbarTitle: "Digital Booklet • WCPP 2026",
     heroEyebrow: "World Congress • Bali 2026",
-    heroTitle: "WCPP 2026",
+    heroTitle: "Digital Booklet WCPP 2026",
     heroDesc:
       "Booklet mobile-first untuk memperkenalkan 7th World Congress on Probation and Parole: ringkas, visual, mudah dibaca di layar HP, dan siap diperkaya dengan logo resmi serta foto Bali.",
     chipDateLabel: "Tanggal",
@@ -145,9 +145,9 @@ const COPY = {
     downloadPdf: "Download PDF",
   },
   en: {
-    topbarTitle: "WCPP 2026 • Bali Booklet",
+    topbarTitle: "Digital Booklet • WCPP 2026",
     heroEyebrow: "World Congress • Bali 2026",
-    heroTitle: "WCPP 2026",
+    heroTitle: "Digital Booklet WCPP 2026",
     heroDesc:
       "A mobile-first booklet introducing the 7th World Congress on Probation and Parole: concise, visual, easy to read on phones, and ready to be enriched with the official logo and beautiful Bali imagery.",
     chipDateLabel: "Date",
