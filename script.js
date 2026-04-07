@@ -141,6 +141,8 @@ const COPY = {
     contactBoxTitle: "Kontak",
     footerNote:
       "Rekomendasi lanjutan: masukkan logo resmi WCPP, foto Bali resolusi tinggi, dan jika panitia sudah final, tambahkan detail shuttle hotel atau route transfer resmi agar booklet ini siap publish.",
+    splashDesc: "Memuat booklet interaktif, siap untuk mobile briefing dan PDF export.",
+    downloadPdf: "Download PDF",
   },
   en: {
     topbarTitle: "WCPP 2026 • Bali Booklet",
@@ -277,15 +279,34 @@ const COPY = {
     contactBoxTitle: "Contact",
     footerNote:
       "Recommended next step: insert the official WCPP logo, use high-resolution Bali imagery, and once finalized by the committee, add hotel shuttle or official transfer details so the booklet is ready to publish.",
+    splashDesc: "Loading the interactive booklet, ready for mobile briefing and PDF export.",
+    downloadPdf: "Download PDF",
   },
 };
 
 document.addEventListener("DOMContentLoaded", () => {
+  setupSplashScreen();
   setupLanguageSwitch();
   setupLogoSlot();
   setupPhotoSlots();
   setupChecklist();
+  setupPrintButton();
 });
+
+const DEFAULT_LOGO = "./assets/wcpp-logo.jpeg";
+
+function setupSplashScreen() {
+  const splash = document.getElementById("splash-screen");
+  if (!splash) {
+    return;
+  }
+
+  document.body.classList.add("is-locked");
+  window.setTimeout(() => {
+    splash.classList.add("is-hidden");
+    document.body.classList.remove("is-locked");
+  }, 1200);
+}
 
 function setupLanguageSwitch() {
   const buttons = [...document.querySelectorAll("[data-lang]")];
@@ -326,16 +347,17 @@ function setupLogoSlot() {
   const image = document.getElementById("logo-image");
   const placeholder = document.getElementById("logo-placeholder");
   const reset = document.getElementById("logo-reset");
+  const frame = document.getElementById("logo-frame");
 
-  if (!input || !image || !placeholder || !reset) {
+  if (!input || !image || !placeholder || !reset || !frame) {
     return;
   }
 
   const savedLogo = localStorage.getItem(STORAGE.logo);
   if (savedLogo) {
-    applyMedia(image, placeholder, savedLogo);
+    applyMedia(frame, image, placeholder, savedLogo);
   } else {
-    applyMedia(image, placeholder, "./assets/wcpp-logo.jpeg");
+    applyMedia(frame, image, placeholder, DEFAULT_LOGO);
   }
 
   input.addEventListener("change", async (event) => {
@@ -346,15 +368,13 @@ function setupLogoSlot() {
 
     const dataUrl = await readAsDataUrl(file);
     localStorage.setItem(STORAGE.logo, dataUrl);
-    applyMedia(image, placeholder, dataUrl);
+    applyMedia(frame, image, placeholder, dataUrl);
     input.value = "";
   });
 
   reset.addEventListener("click", () => {
     localStorage.removeItem(STORAGE.logo);
-    image.hidden = true;
-    image.removeAttribute("src");
-    placeholder.hidden = false;
+    applyMedia(frame, image, placeholder, DEFAULT_LOGO);
   });
 }
 
@@ -411,16 +431,32 @@ function setupChecklist() {
   });
 }
 
+function setupPrintButton() {
+  const button = document.getElementById("print-booklet");
+  if (!button) {
+    return;
+  }
+
+  button.addEventListener("click", () => {
+    window.print();
+  });
+}
+
 function setPhotoCard(card, image, src) {
   image.src = src;
   image.hidden = false;
   card.classList.add("has-image");
 }
 
-function applyMedia(image, placeholder, dataUrl) {
+function applyMedia(frame, image, placeholder, dataUrl) {
   image.src = dataUrl;
   image.hidden = false;
-  placeholder.hidden = true;
+  if (placeholder) {
+    placeholder.hidden = true;
+  }
+  if (frame) {
+    frame.classList.add("has-brand");
+  }
 }
 
 function readJson(key, fallback) {
