@@ -3,24 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Monitor IMEI Kerobokan</title>
+  <title>WCPP 2026 Bali Booklet</title>
+  <meta
+    name="description"
+    content="Booklet mobile-first untuk World Congress on Probation and Parole 2026 di Bali."
+  >
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Plus+Jakarta+Sans:wght@400;500;700&display=swap"
+    rel="stylesheet"
+  >
   <style>
     :root {
-      --bg: #eef3f8;
-      --surface: #ffffff;
-      --surface-muted: #f5f8fc;
-      --line: #d6dfeb;
-      --text: #0f1f3b;
-      --muted: #5c6c87;
-      --accent: #123b7a;
-      --accent-strong: #0a224c;
-      --warn: #b8860b;
-      --danger: #a61b1b;
-      --ok: #1d6f8c;
-      --info: #2f6f8f;
-      --gold: #f0c34a;
-      --shadow: 0 10px 30px rgba(10, 34, 76, 0.08);
-      --radius: 18px;
+      --bg: #f6efe4;
+      --paper: rgba(255, 251, 245, 0.92);
+      --paper-strong: #fffaf3;
+      --ink: #1d2b2f;
+      --muted: #5f6b67;
+      --line: rgba(39, 54, 53, 0.1);
+      --sea: #0b5d6b;
+      --sea-deep: #063d47;
+      --sand: #e7c98f;
+      --sun: #e97f42;
+      --leaf: #3f725f;
+      --danger: #9d3a2a;
+      --shadow: 0 18px 50px rgba(9, 39, 43, 0.12);
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --max: 1120px;
     }
 
     * {
@@ -28,65 +40,185 @@
     }
 
     html {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: var(--text);
+      scroll-behavior: smooth;
       background:
-        radial-gradient(circle at top right, rgba(240, 195, 74, 0.2), transparent 28%),
-        radial-gradient(circle at top left, rgba(18, 59, 122, 0.14), transparent 24%),
-        linear-gradient(180deg, #f7fbff 0%, #ebf2fa 100%);
+        radial-gradient(circle at top left, rgba(233, 127, 66, 0.22), transparent 28%),
+        radial-gradient(circle at top right, rgba(11, 93, 107, 0.18), transparent 36%),
+        linear-gradient(180deg, #f9f4ec 0%, #f1e6d6 100%);
+      color: var(--ink);
+      font-family: "Plus Jakarta Sans", system-ui, sans-serif;
     }
 
     body {
       margin: 0;
       min-height: 100vh;
+      background:
+        linear-gradient(160deg, rgba(255, 255, 255, 0.28), transparent 45%),
+        linear-gradient(0deg, rgba(63, 114, 95, 0.06), rgba(63, 114, 95, 0.06));
     }
 
-    .shell {
-      width: min(1180px, calc(100% - 24px));
-      margin: 20px auto;
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .page-shell {
+      width: min(var(--max), calc(100% - 24px));
+      margin: 0 auto;
+      padding: 14px 0 100px;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 10px;
+      z-index: 20;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      margin-bottom: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      border-radius: 999px;
+      backdrop-filter: blur(18px);
+      background: rgba(255, 248, 240, 0.74);
+      box-shadow: 0 12px 30px rgba(9, 39, 43, 0.08);
+    }
+
+    .topbar strong {
+      font-family: "Manrope", sans-serif;
+      font-size: 0.95rem;
+      letter-spacing: 0.02em;
+    }
+
+    .chip-row,
+    .button-row,
+    .mini-grid,
+    .timeline,
+    .quick-facts,
+    .photo-grid,
+    .highlight-list,
+    .route-list,
+    .checklist {
       display: grid;
-      gap: 16px;
+      gap: 12px;
     }
 
-    .hero,
-    .panel {
-      background: var(--surface);
-      border: 1px solid rgba(215, 224, 231, 0.9);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
+    .top-links {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .top-links::-webkit-scrollbar {
+      display: none;
+    }
+
+    .nav-pill,
+    .mini-pill {
+      white-space: nowrap;
+      padding: 9px 13px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.72);
+      color: var(--sea-deep);
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .lang-switch {
+      display: inline-flex;
+      gap: 6px;
+      padding: 4px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid var(--line);
+    }
+
+    .lang-button {
+      appearance: none;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--sea-deep);
+      font-size: 0.8rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .lang-button.is-active {
+      background: linear-gradient(135deg, var(--sea), var(--sea-deep));
+      color: #fff;
     }
 
     .hero {
-      padding: 18px;
-      display: grid;
-      gap: 16px;
+      position: relative;
+      overflow: hidden;
+      padding: 24px 18px 18px;
+      border-radius: calc(var(--radius-xl) + 6px);
       background:
-        linear-gradient(135deg, rgba(18, 59, 122, 0.08), rgba(255, 255, 255, 0.95)),
-        var(--surface);
+        radial-gradient(circle at 85% 12%, rgba(231, 201, 143, 0.65), transparent 20%),
+        radial-gradient(circle at 14% 0%, rgba(233, 127, 66, 0.22), transparent 28%),
+        linear-gradient(145deg, rgba(11, 93, 107, 0.98), rgba(6, 61, 71, 0.94));
+      color: #fff;
+      box-shadow: var(--shadow);
+      isolation: isolate;
     }
 
-    .hero-top {
-      display: flex;
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto auto 0 0;
+      width: 100%;
+      height: 96px;
+      opacity: 0.18;
+      background:
+        linear-gradient(135deg, transparent 25%, rgba(255, 255, 255, 0.95) 25%, rgba(255, 255, 255, 0.95) 50%, transparent 50%, transparent 75%, rgba(255, 255, 255, 0.95) 75%);
+      background-size: 26px 26px;
+      transform: translateY(36px) rotate(-3deg) scale(1.08);
+      z-index: -1;
+    }
+
+    .hero::after {
+      inset: 24px -70px auto auto;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.22), transparent 60%);
+      transform: none;
+    }
+
+    .hero-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .brand img {
-      width: 52px;
-      height: 52px;
-      object-fit: contain;
-      border-radius: 14px;
-      background: var(--surface-muted);
-      padding: 8px;
-      border: 1px solid var(--line);
+      gap: 8px;
+      width: fit-content;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
     }
 
     h1,
@@ -96,611 +228,917 @@
       margin: 0;
     }
 
-    .hero-copy h1 {
-      font-size: clamp(1.2rem, 2vw, 1.8rem);
-      line-height: 1.1;
+    h1,
+    h2,
+    h3 {
+      font-family: "Manrope", sans-serif;
+      line-height: 1.06;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 8vw, 4.8rem);
+      margin-top: 12px;
     }
 
     .hero-copy p {
-      color: var(--muted);
-      margin-top: 4px;
+      margin-top: 14px;
+      color: rgba(255, 255, 255, 0.84);
+      font-size: 0.98rem;
+      line-height: 1.65;
+      max-width: 64ch;
     }
 
-    .toolbar,
-    .stats,
-    .panel-head,
-    .searchbar,
-    .form-grid,
-    .list-head,
-    .record-meta,
-    .empty,
-    .actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
+    .chip-row {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-top: 16px;
     }
 
-    .toolbar button,
-    .toolbar label,
-    button,
-    .file-button {
-      appearance: none;
-      border: 1px solid var(--line);
-      background: var(--surface-muted);
-      color: var(--text);
-      padding: 10px 14px;
-      border-radius: 12px;
-      font: inherit;
-      font-weight: 600;
-      cursor: pointer;
-      transition: 120ms ease;
-    }
-
-    button.primary {
-      background: var(--accent);
-      color: #fff;
-      border-color: var(--accent);
-    }
-
-    button.warn {
-      background: #fff6e8;
-      color: var(--warn);
-      border-color: #f0c98f;
-    }
-
-    button.danger {
-      background: #fff2f2;
-      color: var(--danger);
-      border-color: #efb6b6;
-    }
-
-    button:hover,
-    .file-button:hover {
-      transform: translateY(-1px);
-      border-color: #a8bfce;
-    }
-
-    .toolbar input[type="file"] {
-      display: none;
-    }
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .stat {
-      background: var(--surface-muted);
-      border: 1px solid var(--line);
-      border-radius: 14px;
+    .fact-chip {
       padding: 14px;
-      position: relative;
-      overflow: hidden;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.14);
     }
 
-    .stat::after {
-      content: "";
-      position: absolute;
-      inset: auto -20px -20px auto;
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      background: rgba(18, 59, 122, 0.08);
-    }
-
-    .stat small {
-      display: flex;
-      align-items: center;
-      gap: 8px;
+    .fact-chip small,
+    .card-subtitle,
+    .stat-note,
+    .route-meta,
+    .media-hint,
+    .foot-note {
+      display: block;
       color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .fact-chip small {
+      color: rgba(255, 255, 255, 0.7);
       margin-bottom: 6px;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
     }
 
-    .stat strong {
-      font-size: 1.5rem;
-      line-height: 1;
-    }
-
-    .main-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 16px;
-    }
-
-    .panel {
-      padding: 16px;
-      display: grid;
-      gap: 14px;
-    }
-
-    .panel-head {
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .panel-head p {
-      color: var(--muted);
-      font-size: 0.92rem;
-      margin-top: 4px;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      border-radius: 999px;
-      padding: 6px 10px;
-      background: var(--surface-muted);
-      border: 1px solid var(--line);
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--muted);
-    }
-
-    .badge.ok {
-      background: #edf9f2;
-      color: var(--ok);
-      border-color: #b9dfca;
-    }
-
-    .badge.warn {
-      background: #fff6e8;
-      color: var(--warn);
-      border-color: #f0c98f;
-    }
-
-    .badge.danger {
-      background: #fff2f2;
-      color: var(--danger);
-      border-color: #efb6b6;
-    }
-
-    .searchbar input,
-    .searchbar select,
-    .searchbar textarea,
-    .form-grid input,
-    .form-grid select,
-    .form-grid textarea,
-    .pin-modal input {
-      width: 100%;
-      border: 1px solid var(--line);
-      background: #fff;
-      color: var(--text);
-      border-radius: 12px;
-      padding: 11px 12px;
-      font: inherit;
-      outline: none;
-    }
-
-    textarea {
-      min-height: 88px;
-      resize: vertical;
-    }
-
-    .searchbar {
-      display: grid;
-      grid-template-columns: 1.4fr 0.8fr;
-    }
-
-    .results,
-    .records,
-    .admin-section {
-      display: grid;
-      gap: 10px;
-    }
-
-    .card,
-    .record {
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      background: var(--surface-muted);
-      padding: 14px;
-      display: grid;
-      gap: 10px;
-    }
-
-    .card-top,
-    .record-top {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      align-items: start;
-      flex-wrap: wrap;
-    }
-
-    .card h3,
-    .record h3 {
+    .fact-chip strong {
+      display: block;
       font-size: 1rem;
     }
 
-    .meta {
-      color: var(--muted);
-      font-size: 0.92rem;
-    }
-
-    .device-list {
+    .logo-card {
       display: grid;
-      gap: 8px;
-    }
-
-    .device {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      padding: 10px 12px;
-      border-radius: 12px;
-      background: #fff;
-      border: 1px solid var(--line);
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    .device-main {
-      display: grid;
-      gap: 4px;
-    }
-
-    .device-toggle {
-      text-align: left;
-      min-width: 240px;
-      border: 1px solid var(--line);
-      background: linear-gradient(180deg, #fff, #f5f9ff);
-      color: var(--accent-strong);
-    }
-
-    .device-toggle::before {
-      content: "IMEI";
-      display: block;
-      font-size: 0.72rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 4px;
-    }
-
-    .device-toggle.active {
-      background: linear-gradient(135deg, var(--accent), #2457a6);
-      border-color: var(--accent);
-      color: #fff;
-      box-shadow: 0 12px 24px rgba(18, 59, 122, 0.2);
-    }
-
-    .device-toggle.active::before {
-      color: rgba(255, 255, 255, 0.72);
-    }
-
-    .device-code {
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-    }
-
-    .empty {
-      justify-content: center;
-      color: var(--muted);
-      background: var(--surface-muted);
-      border: 1px dashed var(--line);
-      border-radius: 14px;
-      padding: 24px;
-      text-align: center;
-    }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .span-2 {
-      grid-column: span 2;
-    }
-
-    .section-title {
-      font-size: 0.96rem;
-      font-weight: 800;
-      letter-spacing: 0.02em;
-    }
-
-    .admin-shell {
-      display: none;
-      gap: 14px;
-    }
-
-    .admin-shell.active {
-      display: grid;
-    }
-
-    .admin-note {
-      color: var(--muted);
-      font-size: 0.92rem;
-    }
-
-    .record-meta {
-      color: var(--muted);
-      font-size: 0.88rem;
-    }
-
-    .record-actions {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .pin-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(16, 34, 53, 0.5);
-      display: none;
-      align-items: center;
-      justify-content: center;
+      gap: 12px;
       padding: 16px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      align-content: start;
     }
 
-    .pin-overlay.active {
-      display: flex;
-    }
-
-    .pin-modal {
-      width: min(420px, 100%);
-      background: var(--surface);
-      border-radius: 18px;
-      padding: 20px;
-      box-shadow: 0 30px 60px rgba(16, 34, 53, 0.28);
+    .logo-frame {
+      position: relative;
       display: grid;
-      gap: 14px;
+      place-items: center;
+      min-height: 180px;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 1px dashed rgba(255, 255, 255, 0.4);
+      background:
+        radial-gradient(circle at top, rgba(255, 255, 255, 0.24), transparent 55%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.05));
     }
 
-    .pin-modal p {
-      color: var(--muted);
+    .logo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 22px;
     }
 
-    .footer-note {
+    .logo-placeholder {
       text-align: center;
-      color: var(--muted);
-      font-size: 0.85rem;
-      padding-bottom: 8px;
+      padding: 18px;
     }
 
-    .hint {
-      color: var(--muted);
-      font-size: 0.88rem;
-    }
-
-    .admin-only {
-      display: none;
-    }
-
-    .admin-only.active {
+    .logo-placeholder strong,
+    .placeholder-content strong {
       display: block;
+      font-size: 1rem;
+      margin-bottom: 6px;
     }
 
-    .panel-icon {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 32px;
-      height: 32px;
-      border-radius: 10px;
-      background: rgba(18, 59, 122, 0.1);
-      color: var(--accent);
-      font-weight: 800;
-      margin-right: 8px;
+    .logo-actions,
+    .media-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
     }
 
-    .mini-icon {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 22px;
-      height: 22px;
+    .button,
+    .ghost-button,
+    .upload-button {
+      appearance: none;
+      border: none;
       border-radius: 999px;
-      background: rgba(18, 59, 122, 0.1);
-      color: var(--accent);
-      font-size: 0.9rem;
-      flex: 0 0 auto;
+      padding: 12px 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.16s ease, background 0.16s ease;
     }
 
-    .badge .mini-icon {
-      width: 18px;
-      height: 18px;
-      font-size: 0.75rem;
-      background: rgba(255, 255, 255, 0.25);
-      color: currentColor;
+    .button:hover,
+    .ghost-button:hover,
+    .upload-button:hover {
+      transform: translateY(-1px);
     }
 
-    .inside-shell {
-      display: none;
+    .button {
+      background: linear-gradient(135deg, var(--sun), #f2a557);
+      color: #fff;
+    }
+
+    .ghost-button,
+    .upload-button {
+      background: rgba(255, 255, 255, 0.14);
+      color: inherit;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+    }
+
+    .section {
+      margin-top: 14px;
+      padding: 18px;
+      border-radius: var(--radius-xl);
+      background: var(--paper);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .section-header {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+      padding: 8px 11px;
+      border-radius: 999px;
+      background: rgba(11, 93, 107, 0.08);
+      color: var(--sea);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .section-header p {
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .mini-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .card,
+    .route-card,
+    .feature-card,
+    .photo-card,
+    .timeline-card {
+      position: relative;
+      overflow: hidden;
+      padding: 16px;
+      border-radius: var(--radius-lg);
+      background: var(--paper-strong);
+      border: 1px solid var(--line);
+    }
+
+    .card strong,
+    .timeline-card strong,
+    .feature-card strong,
+    .route-card strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 1rem;
+    }
+
+    .card p,
+    .route-card p,
+    .feature-card p,
+    .timeline-card p {
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .quick-facts {
+      grid-template-columns: 1fr;
+    }
+
+    .fact-line {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(39, 54, 53, 0.08);
+    }
+
+    .fact-line:last-child {
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .fact-line span {
+      color: var(--muted);
+    }
+
+    .fact-line strong {
+      max-width: 56%;
+      text-align: right;
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: 18px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      top: 8px;
+      bottom: 8px;
+      left: 6px;
+      width: 2px;
+      background: linear-gradient(180deg, var(--sun), rgba(11, 93, 107, 0.35));
+    }
+
+    .timeline-card::before {
+      content: "";
+      position: absolute;
+      top: 18px;
+      left: -17px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--sun), #ffcf8a);
+      border: 2px solid #fff;
+      box-shadow: 0 0 0 5px rgba(233, 127, 66, 0.12);
+    }
+
+    .highlight-list,
+    .route-list,
+    .checklist {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .highlight-item,
+    .route-item,
+    .checklist-item {
+      display: grid;
+      gap: 6px;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(39, 54, 53, 0.08);
+    }
+
+    .highlight-item:last-child,
+    .route-item:last-child,
+    .checklist-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .route-item strong,
+    .highlight-item strong {
+      margin-bottom: 0;
+    }
+
+    .route-meta {
+      font-size: 0.86rem;
+    }
+
+    .route-card.public {
+      background:
+        linear-gradient(180deg, rgba(11, 93, 107, 0.05), rgba(11, 93, 107, 0.01)),
+        var(--paper-strong);
+    }
+
+    .checklist-item {
+      grid-template-columns: auto 1fr;
+      align-items: start;
       gap: 12px;
     }
 
-    .inside-shell.active {
+    .check-toggle {
+      width: 24px;
+      height: 24px;
+      margin-top: 2px;
+      accent-color: var(--leaf);
+    }
+
+    .checklist-item.done strong,
+    .checklist-item.done p {
+      opacity: 0.55;
+      text-decoration: line-through;
+    }
+
+    .photo-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .photo-card {
+      min-height: 220px;
       display: grid;
+      gap: 14px;
+      align-content: end;
+      background:
+        linear-gradient(180deg, rgba(6, 61, 71, 0.08), rgba(6, 61, 71, 0.03)),
+        var(--paper-strong);
     }
 
-    .inside-card {
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      background: linear-gradient(135deg, rgba(18, 59, 122, 0.05), rgba(240, 195, 74, 0.1));
-      padding: 14px;
+    .photo-preview {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .photo-card.has-image::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(6, 61, 71, 0.06), rgba(6, 61, 71, 0.6));
+    }
+
+    .placeholder-content,
+    .photo-card footer {
+      position: relative;
+      z-index: 1;
+    }
+
+    .placeholder-content {
       display: grid;
-      gap: 6px;
+      gap: 8px;
+      width: min(100%, 240px);
+      color: var(--sea-deep);
     }
 
-    .inside-card strong {
-      color: var(--accent-strong);
+    .photo-card.has-image .placeholder-content {
+      color: #fff;
     }
 
-    @media (max-width: 960px) {
-      .main-grid,
-      .stats,
-      .inside-shell,
-      .searchbar,
-      .form-grid {
-        grid-template-columns: 1fr;
+    .photo-card footer {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .photo-card footer strong,
+    .photo-card footer p {
+      color: inherit;
+    }
+
+    .utility-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .cta-box {
+      padding: 16px;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(140deg, rgba(233, 127, 66, 0.12), rgba(231, 201, 143, 0.22));
+      border: 1px solid rgba(233, 127, 66, 0.16);
+    }
+
+    .cta-box p {
+      color: var(--muted);
+      margin-top: 8px;
+      line-height: 1.65;
+    }
+
+    .button-row {
+      margin-top: 14px;
+      grid-template-columns: 1fr;
+    }
+
+    .button-row a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+    }
+
+    .source-strip {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(39, 54, 53, 0.08);
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .source-strip a {
+      color: var(--sea);
+      font-weight: 700;
+    }
+
+    .footer-note {
+      margin-top: 16px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.85rem;
+      line-height: 1.6;
+    }
+
+    .hidden-input {
+      display: none;
+    }
+
+    @media (min-width: 720px) {
+      .page-shell {
+        width: min(var(--max), calc(100% - 40px));
+        padding-top: 22px;
       }
 
-      .span-2 {
-        grid-column: span 1;
+      .hero {
+        padding: 30px;
+      }
+
+      .hero-grid,
+      .utility-grid {
+        grid-template-columns: 1.45fr 0.95fr;
+        align-items: start;
+      }
+
+      .mini-grid,
+      .photo-grid,
+      .button-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .topbar {
+        gap: 14px;
+      }
+
+      .quick-facts {
+        grid-template-columns: 1fr 1fr;
+        column-gap: 20px;
+      }
+    }
+
+    @media (min-width: 960px) {
+      .section {
+        padding: 24px;
+      }
+
+      .photo-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .button-row {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
       }
     }
   </style>
 </head>
 <body>
-  <div class="shell">
-    <section class="hero">
-      <div class="hero-top">
-        <div class="brand">
-          <img src="assets/logo1.png" alt="Logo Lapas" loading="lazy">
-          <img src="assets/logo2.png" alt="Logo Kementerian" loading="lazy">
-          <div class="hero-copy">
-            <h1>Monitor IMEI</h1>
-            <p>Lapas Kelas IIA Kerobokan. Cepat, ringan, dan fokus audit.</p>
-          </div>
-        </div>
-        <div class="toolbar">
-          <span id="admin-status" class="badge">Mode petugas</span>
-          <button id="admin-toggle" type="button">Masuk admin</button>
-          <button id="export-btn" type="button">Export data</button>
-          <label class="file-button" for="import-input">Import data</label>
-          <input id="import-input" type="file" accept="application/json">
-        </div>
+  <main class="page-shell">
+    <div class="topbar">
+      <strong data-i18n="topbarTitle">WCPP 2026 • Bali Booklet</strong>
+      <div class="top-links">
+        <a class="nav-pill" href="#overview" data-i18n="overviewLabel">Overview</a>
+        <a class="nav-pill" href="#arrival" data-i18n="arrivalNav">Arrival</a>
+        <a class="nav-pill" href="#transport" data-i18n="transportLabel">Transport</a>
+        <a class="nav-pill" href="#special" data-i18n="specialNav">Special</a>
+        <a class="nav-pill" href="#gallery" data-i18n="galleryNav">Gallery</a>
       </div>
-      <div class="stats" id="stats"></div>
-      <div class="inside-shell admin-only" id="inside-shell"></div>
-    </section>
-
-    <main class="main-grid">
-      <section class="panel">
-        <div class="panel-head">
-          <div>
-            <h2><span class="panel-icon">I</span>Pencarian IMEI</h2>
-            <p>Cari nama, jabatan, atau nomor IMEI. Klik 1x IMEI untuk menandai HP sedang berada di dalam lapas.</p>
-          </div>
-          <span class="badge ok" id="dataset-badge">Dataset lokal aktif</span>
-        </div>
-
-        <div class="searchbar">
-          <input id="search-input" type="search" placeholder="Cari nama staf / IMEI / jabatan">
-          <select id="search-filter">
-            <option value="all">Semua status</option>
-            <option value="safe">Tidak disita</option>
-            <option value="blocked">Terindikasi sitaan</option>
-          </select>
-        </div>
-
-        <div class="results" id="staff-results"></div>
-        <p class="hint">IMEI hanya tampil setelah pencarian diisi agar daftar tetap ringkas.</p>
-      </section>
-    </main>
-
-    <section class="panel admin-shell" id="admin-shell">
-      <div class="panel-head">
-        <div>
-          <h2>Panel Admin</h2>
-          <p>Kelola staf, tambah IMEI baru, dan ubah PIN admin.</p>
-        </div>
-        <span class="badge danger">Akses terbatas</span>
-      </div>
-
-      <div class="admin-section">
-        <div class="section-title">Register Imei Hp</div>
-        <form id="seized-form" class="form-grid">
-          <input id="seized-brand" type="text" placeholder="Merek perangkat" required>
-          <input id="seized-model" type="text" placeholder="Model / tipe perangkat" required>
-          <input id="seized-imei-1" type="text" inputmode="numeric" placeholder="IMEI 1" required>
-          <input id="seized-imei-2" type="text" inputmode="numeric" placeholder="IMEI 2 (opsional)">
-          <input id="seized-officer" type="text" placeholder="Nama petugas penanggung jawab" required>
-          <input id="seized-unit" type="text" placeholder="Unit / regu petugas" required>
-          <input id="seized-datetime" type="datetime-local" required>
-          <input id="seized-location" type="text" placeholder="Lokasi / blok penemuan" required>
-          <input id="seized-owner" type="text" placeholder="Dari siapa / kamar mana" class="span-2">
-          <input id="seized-storage" type="text" placeholder="Lokasi penyimpanan barang bukti" required>
-          <textarea id="seized-notes" class="span-2" placeholder="Keterangan kronologi, ciri fisik, atau nomor berita acara"></textarea>
-          <div class="actions span-2">
-            <button class="primary" type="submit">Simpan sitaan</button>
-            <button id="seized-reset" type="button">Bersihkan form</button>
-          </div>
-        </form>
-      </div>
-
-      <div class="admin-section">
-        <div class="panel-head">
-          <div>
-            <h2><span class="panel-icon">S</span>Data Sitaan</h2>
-            <p>Pencarian dan pengelolaan data IMEI yang masih atau pernah disita.</p>
-          </div>
-          <span class="badge warn" id="seized-badge">Audit aktif</span>
-        </div>
-        <div class="searchbar admin-only active" id="seized-search-shell">
-          <input id="seized-search-input" type="search" placeholder="Cari IMEI sitaan / petugas / merek / lokasi">
-          <select id="seized-search-filter">
-            <option value="active">Masih disita</option>
-            <option value="all">Semua data</option>
-            <option value="released">Sudah ditutup</option>
-          </select>
-        </div>
-        <div class="records" id="seized-records"></div>
-      </div>
-
-      <div class="admin-section">
-        <div class="section-title">Tambah staf baru</div>
-        <form id="staff-form" class="form-grid">
-          <input id="staff-name" type="text" placeholder="Nama staf" required>
-          <input id="staff-position" type="text" placeholder="Jabatan / fungsi" required>
-          <textarea id="staff-note" class="span-2" placeholder="Catatan tambahan (opsional)"></textarea>
-          <div class="actions span-2">
-            <button class="primary" type="submit">Tambah staf</button>
-          </div>
-        </form>
-      </div>
-
-      <div class="admin-section">
-        <div class="section-title">Tambah IMEI ke staf</div>
-        <form id="device-form" class="form-grid">
-          <select id="device-staff" class="span-2" required></select>
-          <input id="device-label" type="text" placeholder="Label perangkat, contoh: HP Dinas 2" required>
-          <input id="device-imei" type="text" inputmode="numeric" placeholder="IMEI baru" required>
-          <input id="device-brand" type="text" placeholder="Merek / model singkat">
-          <input id="device-slot" type="number" min="1" max="4" placeholder="Slot / urutan IMEI">
-          <textarea id="device-note" class="span-2" placeholder="Catatan perangkat (opsional)"></textarea>
-          <div class="actions span-2">
-            <button class="primary" type="submit">Tambah IMEI</button>
-          </div>
-        </form>
-      </div>
-
-      <div class="admin-section">
-        <div class="section-title">Keamanan admin</div>
-        <form id="pin-form" class="form-grid">
-          <input id="current-pin" type="password" placeholder="PIN saat ini" required>
-          <input id="next-pin" type="password" placeholder="PIN baru" required>
-          <div class="actions span-2">
-            <button class="warn" type="submit">Ganti PIN</button>
-          </div>
-        </form>
-        <p class="admin-note">PIN bawaan: <strong>123456</strong>. Ganti segera setelah pertama kali masuk.</p>
-      </div>
-    </section>
-
-    <p class="footer-note">Copyright @LamtorroTech. Internal Monitoring System.</p>
-  </div>
-
-  <div class="pin-overlay" id="pin-overlay" aria-hidden="true">
-    <div class="pin-modal">
-      <div>
-        <h3>Masuk admin</h3>
-        <p>Masukkan PIN admin untuk membuka panel pengelolaan data.</p>
-      </div>
-      <input id="pin-input" type="password" inputmode="numeric" placeholder="PIN admin">
-      <div class="actions">
-        <button id="pin-submit" class="primary" type="button">Masuk</button>
-        <button id="pin-cancel" type="button">Batal</button>
+      <div class="lang-switch" aria-label="Language switch">
+        <button class="lang-button is-active" type="button" data-lang="id">ID</button>
+        <button class="lang-button" type="button" data-lang="en">EN</button>
       </div>
     </div>
-  </div>
 
-  <script defer src="staff-data.js"></script>
-  <script defer src="script.js"></script>
+    <section class="hero">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow" data-i18n="heroEyebrow">World Congress • Bali 2026</span>
+          <h1 data-i18n="heroTitle">WCPP 2026</h1>
+          <p data-i18n="heroDesc">
+            Booklet mobile-first untuk memperkenalkan 7th World Congress on Probation and Parole:
+            ringkas, visual, mudah dibaca di layar HP, dan siap diperkaya dengan logo resmi serta foto Bali.
+          </p>
+          <div class="chip-row">
+            <div class="fact-chip">
+              <small data-i18n="chipDateLabel">Tanggal</small>
+              <strong>14–17 April 2026</strong>
+            </div>
+            <div class="fact-chip">
+              <small data-i18n="chipLocationLabel">Lokasi</small>
+              <strong>Bali, Indonesia</strong>
+            </div>
+            <div class="fact-chip">
+              <small data-i18n="chipThemeLabel">Tema</small>
+              <strong>Getting Smart on Justice</strong>
+            </div>
+            <div class="fact-chip">
+              <small data-i18n="chipMoodLabel">Nuansa</small>
+              <strong data-i18n="chipMoodValue">Modern, warm, khas Bali</strong>
+            </div>
+          </div>
+        </div>
+
+        <aside class="logo-card">
+          <div class="logo-frame" id="logo-frame">
+            <img id="logo-image" alt="Logo WCPP" hidden>
+            <div class="logo-placeholder" id="logo-placeholder">
+              <strong data-i18n="logoSlotTitle">Tempat Logo WCPP</strong>
+              <span class="media-hint" data-i18n="logoSlotHint">Tap upload untuk memasukkan logo resmi versi PNG/SVG/JPG.</span>
+            </div>
+          </div>
+          <div>
+            <strong data-i18n="logoCardTitle">Cover Brand Slot</strong>
+            <span class="media-hint" data-i18n="logoCardHint">
+              Dipakai untuk preview booklet tanpa backend. Logo tersimpan lokal di browser perangkat ini.
+            </span>
+          </div>
+          <div class="logo-actions">
+            <label class="upload-button" for="logo-input" data-i18n="uploadLogo">Upload logo</label>
+            <button class="ghost-button" type="button" id="logo-reset" data-i18n="reset">Reset</button>
+          </div>
+          <input class="hidden-input" id="logo-input" type="file" accept="image/*">
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="overview">
+      <div class="section-header">
+        <span class="section-label" data-i18n="overviewLabel">Overview</span>
+        <h2 data-i18n="overviewTitle">Info umum yang langsung menjawab “ini acara apa dan kenapa penting?”</h2>
+        <p data-i18n="overviewDesc">
+          WCPP 2026 adalah kongres biennial global yang mempertemukan pemimpin, praktisi, peneliti,
+          dan pembuat kebijakan di bidang probation, parole, dan community-based justice.
+          Bali dipilih bukan hanya sebagai destinasi, tetapi sebagai panggung dialog internasional
+          tentang keadilan restoratif, reintegrasi, dan solusi yang lebih manusiawi.
+        </p>
+      </div>
+
+      <div class="mini-grid">
+        <article class="card">
+          <strong data-i18n="overviewCard1Title">Congress Snapshot</strong>
+          <p data-i18n="overviewCard1Desc">
+            Forum internasional untuk keynote, panel ahli, workshop interaktif, networking lintas negara,
+            dan pertukaran praktik terbaik correctional services.
+          </p>
+        </article>
+        <article class="card">
+          <strong data-i18n="overviewCard2Title">Value Utama</strong>
+          <p data-i18n="overviewCard2Desc">
+            Fokus pada restorative and inclusive justice, dengan percakapan yang menghubungkan kebijakan,
+            riset, implementasi lapangan, dan dampak sosial.
+          </p>
+        </article>
+        <article class="card">
+          <strong data-i18n="overviewCard3Title">Momentum Indonesia</strong>
+          <p data-i18n="overviewCard3Desc">
+            Setelah London, Los Angeles, Tokyo, Sydney, Ottawa, dan The Hague, edisi 2026 menempatkan
+            Indonesia sebagai tuan rumah global justice dialogue berikutnya.
+          </p>
+        </article>
+        <article class="card">
+          <strong data-i18n="overviewCard4Title">Audience Fit</strong>
+          <p data-i18n="overviewCard4Desc">
+            Cocok untuk delegasi kementerian, correctional leaders, akademisi, mitra pembangunan,
+            praktisi re-entry, dan stakeholders komunitas.
+          </p>
+        </article>
+      </div>
+
+      <div class="quick-facts">
+        <div class="fact-line">
+          <span>Theme</span>
+          <strong>Getting Smart on Justice: Healing Hearts &amp; Safer Societies</strong>
+        </div>
+        <div class="fact-line">
+          <span data-i18n="formatLabel">Format</span>
+          <strong data-i18n="formatValue">Keynote, panel, workshop, cultural visit</strong>
+        </div>
+        <div class="fact-line">
+          <span data-i18n="contactLabel">Official Contact</span>
+          <strong>mail@wcpp2026.id</strong>
+        </div>
+        <div class="fact-line">
+          <span>WhatsApp</span>
+          <strong>+62 852-8554-7470</strong>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <span class="section-label" data-i18n="venueLabel">Venue</span>
+        <h2 data-i18n="venueTitle">Pusat kegiatan di kawasan Nusa Dua yang ramah event internasional</h2>
+        <p data-i18n="venueDesc">
+          Untuk booklet ini, venue diposisikan sebagai pengalaman: area yang premium, aman, mudah
+          dijangkau dari hotel sekitar, dan kuat secara visual untuk tamu internasional.
+        </p>
+      </div>
+
+      <div class="mini-grid">
+        <article class="feature-card">
+          <strong>BICC within The Westin</strong>
+          <p data-i18n="venueCard1Desc">
+            Venue resmi WCPP 2026 adalah Bali International Convention Centre within The Westin,
+            di enclave resort Nusa Dua yang dekat hotel, dining, dan white-sand beachfront.
+          </p>
+        </article>
+        <article class="feature-card">
+          <strong data-i18n="venueCard2Title">8 Room Experience</strong>
+          <p data-i18n="venueCard2Desc">
+            Format kongres dibagi ke delapan ruang untuk Inspirational Talk, Deep Talk, dan Out of The Box,
+            sehingga alur acara terasa dinamis dan tidak monoton.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="arrival">
+      <div class="section-header">
+        <span class="section-label" data-i18n="arrivalLabel">Arrival Flow</span>
+        <h2 data-i18n="arrivalTitle">Alur kedatangan dari sebelum terbang sampai siap menuju venue</h2>
+        <p data-i18n="arrivalDesc">
+          Disusun untuk peserta internasional agar tahu urutan praktis: dokumen, proses bandara,
+          dan keputusan transport setelah keluar terminal.
+        </p>
+      </div>
+
+      <div class="timeline">
+        <article class="timeline-card">
+          <strong data-i18n="arrivalStep1Title">1. Sebelum berangkat</strong>
+          <p data-i18n="arrivalStep1Desc">
+            Siapkan paspor aktif minimal 6 bulan, tiket pulang/lanjutan, cek kelayakan VOA/e-VOA,
+            dan isi Electronic Customs Declaration maksimal 72 jam sebelum tiba.
+          </p>
+        </article>
+        <article class="timeline-card">
+          <strong data-i18n="arrivalStep2Title">2. Tiba di Ngurah Rai Airport</strong>
+          <p data-i18n="arrivalStep2Desc">
+            Lalui immigration, ambil bagasi, lalu tunjukkan QR Electronic Customs Declaration di area bea cukai
+            sebelum keluar dari bandara.
+          </p>
+        </article>
+        <article class="timeline-card">
+          <strong data-i18n="arrivalStep3Title">3. Orientasi delegasi</strong>
+          <p data-i18n="arrivalStep3Desc">
+            Cari Airport Help Desk dekat baggage claim dengan identitas 7th WCPP untuk bantuan arah,
+            informasi transport, dan koordinasi awal menuju hotel atau venue.
+          </p>
+        </article>
+        <article class="timeline-card">
+          <strong data-i18n="arrivalStep4Title">4. Menuju Nusa Dua</strong>
+          <p data-i18n="arrivalStep4Desc">
+            Opsi paling praktis adalah official airport taxi, Grab Lounge, Gojek Customer Lounge,
+            atau hotel transfer yang sudah diatur sebelumnya.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="transport">
+      <div class="section-header">
+        <span class="section-label" data-i18n="transportLabel">Transport</span>
+        <h2 data-i18n="transportTitle">Transportasi umum dan bersama: versi yang realistis untuk Bali</h2>
+        <p data-i18n="transportDesc">
+          Bali belum berbasis mass transit besar seperti MRT. Untuk booklet, alur transport umum
+          dibingkai sebagai kombinasi layanan publik bandara, ride-hailing resmi, shuttle hotel,
+          dan pergerakan singkat di kawasan Nusa Dua.
+        </p>
+      </div>
+
+      <div class="mini-grid">
+        <article class="route-card public">
+          <strong data-i18n="transportCard1Title">Rute Delegasi Paling Aman</strong>
+          <ul class="route-list">
+            <li class="route-item">
+              <strong>Arrival terminal → Grab Lounge / Gojek Lounge</strong>
+              <span class="route-meta" data-i18n="transportRoute1Desc">Opsi paling mudah dibaca tamu asing karena ada titik tunggu resmi di area bandara.</span>
+            </li>
+            <li class="route-item">
+              <strong>Airport → Hotel di Nusa Dua</strong>
+              <span class="route-meta" data-i18n="transportRoute2Desc">Gunakan ride-hailing resmi, taxi bandara, atau shuttle hotel jika sudah tersedia.</span>
+            </li>
+            <li class="route-item">
+              <strong>Hotel → Venue</strong>
+              <span class="route-meta" data-i18n="transportRoute3Desc">Pilih jalan kaki, shuttle hotel, atau short ride dalam kawasan Nusa Dua.</span>
+            </li>
+          </ul>
+        </article>
+
+        <article class="route-card">
+          <strong data-i18n="transportCard2Title">Catatan untuk booklet</strong>
+          <ul class="highlight-list">
+            <li class="highlight-item">
+              <strong data-i18n="transportHighlight1Title">Transport umum Bali bersifat terbatas</strong>
+              <p data-i18n="transportHighlight1Desc">Karena itu narasi booklet lebih kuat jika menonjolkan kemudahan transfer resmi ketimbang janji rute bus detail yang bisa berubah.</p>
+            </li>
+            <li class="highlight-item">
+              <strong data-i18n="transportHighlight2Title">Shuttle adalah senjata utama</strong>
+              <p data-i18n="transportHighlight2Desc">Tambahkan info shuttle hotel atau shuttle event jika nanti tersedia, karena ini paling relevan untuk delegasi konferensi.</p>
+            </li>
+            <li class="highlight-item">
+              <strong data-i18n="transportHighlight3Title">Walkable zone menjadi nilai jual</strong>
+              <p data-i18n="transportHighlight3Desc">Cluster Nusa Dua membuat last-mile lebih tenang, aman, dan tidak melelahkan setelah penerbangan panjang.</p>
+            </li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="section-header" style="margin-top:18px;">
+        <h3 data-i18n="checklistTitle">Checklist kedatangan pribadi</h3>
+        <p data-i18n="checklistDesc">Fitur spesial: checklist bisa dicentang dan tersimpan lokal di browser HP.</p>
+      </div>
+      <ul class="checklist" id="arrival-checklist">
+        <li class="checklist-item" data-key="visa">
+          <input class="check-toggle" type="checkbox" aria-label="Visa dan passport siap">
+          <div>
+            <strong data-i18n="check1Title">Visa, paspor, tiket pulang siap</strong>
+            <p data-i18n="check1Desc">Gunakan untuk memastikan entry requirement tidak tertinggal sebelum berangkat.</p>
+          </div>
+        </li>
+        <li class="checklist-item" data-key="ecd">
+          <input class="check-toggle" type="checkbox" aria-label="E-CD selesai">
+          <div>
+            <strong data-i18n="check2Title">Electronic Customs Declaration selesai</strong>
+            <p data-i18n="check2Desc">Idealnya diisi sebelum tiba agar proses keluar bandara lebih singkat.</p>
+          </div>
+        </li>
+        <li class="checklist-item" data-key="pickup">
+          <input class="check-toggle" type="checkbox" aria-label="Transport ke hotel dipilih">
+          <div>
+            <strong data-i18n="check3Title">Pilihan transfer dari airport sudah diputuskan</strong>
+            <p data-i18n="check3Desc">Tentukan lebih awal: official taxi, Grab, Gojek, atau shuttle hotel.</p>
+          </div>
+        </li>
+        <li class="checklist-item" data-key="venue">
+          <input class="check-toggle" type="checkbox" aria-label="Rute ke venue siap">
+          <div>
+            <strong data-i18n="check4Title">Rute hotel ke venue sudah jelas</strong>
+            <p data-i18n="check4Desc">Cek jalan kaki, drop-off point, atau shuttle internal kawasan Nusa Dua.</p>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <section class="section" id="special">
+      <div class="section-header">
+        <span class="section-label" data-i18n="specialLabel">Special Edge</span>
+        <h2 data-i18n="specialTitle">Hal yang membuat WCPP 2026 terasa spesial, bukan sekadar konferensi biasa</h2>
+        <p data-i18n="specialDesc">
+          Bagian ini dibuat seperti selling points booklet: kuat untuk pitching, sponsor deck, maupun
+          komunikasi ke calon peserta.
+        </p>
+      </div>
+
+      <div class="mini-grid">
+        <article class="feature-card">
+          <strong data-i18n="specialCard1Title">Justice Meets Bali</strong>
+          <p data-i18n="specialCard1Desc">
+            WCPP 2026 menyatukan percakapan serius tentang keadilan dengan atmosfer healing, hospitality,
+            dan cultural warmth yang hanya kuat jika dibingkai dari Bali.
+          </p>
+        </article>
+        <article class="feature-card">
+          <strong data-i18n="specialCard2Title">Limited Cultural Visit</strong>
+          <p data-i18n="specialCard2Desc">
+            Ada cultural and technical visit di hari akhir, termasuk observasi praktik reintegrasi lokal,
+            dengan kuota terbatas untuk 100 peserta terdaftar pertama.
+          </p>
+        </article>
+        <article class="feature-card">
+          <strong data-i18n="specialCard3Title">Global Voices, Local Texture</strong>
+          <p data-i18n="specialCard3Desc">
+            Pembicara internasional dan nasional ditempatkan dalam panggung yang tetap menunjukkan
+            identitas Indonesia, bukan venue netral tanpa karakter.
+          </p>
+        </article>
+        <article class="feature-card">
+          <strong data-i18n="specialCard4Title">Booklet Ini Interaktif</strong>
+          <p data-i18n="specialCard4Desc">
+            Logo bisa diunggah, foto bisa diganti, checklist bisa disimpan lokal. Jadi booklet terasa
+            seperti microsite presentasi, bukan PDF statis.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="gallery">
+      <div class="section-header">
+        <span class="section-label" data-i18n="galleryLabel">Gallery Slots</span>
+        <h2 data-i18n="galleryTitle">Tempat foto-foto Bali yang indah untuk memperkaya suasana</h2>
+        <p data-i18n="galleryDesc">
+          Setiap slot bisa diisi dari galeri HP. Cocok untuk sunrise beach, gerbang khas Bali, budaya,
+          atau landscape resort area.
+        </p>
+      </div>
+
+      <div class="photo-grid">
+        <article class="photo-card" data-photo-card="photo-1" data-default-src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Uluwatu_Temple.jpg">
+          <img class="photo-preview" alt="Foto Bali 1" hidden>
+          <div class="placeholder-content">
+            <strong data-i18n="gallerySlot1Title">Photo Slot 01</strong>
+            <span class="media-hint" data-i18n="gallerySlot1Hint">Ideal untuk hero visual: laut, sunrise, atau aerial Nusa Dua.</span>
+          </div>
+          <footer>
+            <div>
+              <strong data-i18n="galleryCard1Title">Opening Mood</strong>
+              <p data-i18n="galleryCard1Desc">Visual pertama yang membentuk impresi elegan.</p>
+            </div>
+            <label class="upload-button" for="photo-1" data-i18n="upload">Upload</label>
+          </footer>
+          <input class="hidden-input" id="photo-1" type="file" accept="image/*">
+        </article>
+
+        <article class="photo-card" data-photo-card="photo-2" data-default-src="https://upload.wikimedia.org/wikipedia/commons/0/03/Bali_038_-_Ubud_-_kecak_fire_dance.jpg">
+          <img class="photo-preview" alt="Foto Bali 2" hidden>
+          <div class="placeholder-content">
+            <strong data-i18n="gallerySlot2Title">Photo Slot 02</strong>
+            <span class="media-hint" data-i18n="gallerySlot2Hint">Ideal untuk budaya: tari, arsitektur, atau detail ornament Bali.</span>
+          </div>
+          <footer>
+            <div>
+              <strong data-i18n="galleryCard2Title">Cultural Accent</strong>
+              <p data-i18n="galleryCard2Desc">Untuk menegaskan nuansa lokal yang hangat.</p>
+            </div>
+            <label class="upload-button" for="photo-2" data-i18n="upload">Upload</label>
+          </footer>
+          <input class="hidden-input" id="photo-2" type="file" accept="image/*">
+        </article>
+
+        <article class="photo-card" data-photo-card="photo-3" data-default-src="https://upload.wikimedia.org/wikipedia/commons/b/b2/Bali_%E2%80%93_Rice_Terrace_%282692079315%29.jpg">
+          <img class="photo-preview" alt="Foto Bali 3" hidden>
+          <div class="placeholder-content">
+            <strong data-i18n="gallerySlot3Title">Photo Slot 03</strong>
+            <span class="media-hint" data-i18n="gallerySlot3Hint">Ideal untuk ambience delegasi: resort, meeting zone, atau city arrival.</span>
+          </div>
+          <footer>
+            <div>
+              <strong data-i18n="galleryCard3Title">Delegate Journey</strong>
+              <p data-i18n="galleryCard3Desc">Menutup booklet dengan rasa perjalanan yang lengkap.</p>
+            </div>
+            <label class="upload-button" for="photo-3" data-i18n="upload">Upload</label>
+          </footer>
+          <input class="hidden-input" id="photo-3" type="file" accept="image/*">
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="utility-grid">
+        <div class="cta-box">
+          <strong data-i18n="quickAccessTitle">Quick Access</strong>
+          <p data-i18n="quickAccessDesc">
+            Link cepat untuk mengubah booklet ini menjadi alat briefing singkat: daftar, cek situs resmi,
+            buka peta, atau ambil invitation letter.
+          </p>
+          <div class="button-row">
+            <a class="button" href="https://www.wcpp2026.id/" target="_blank" rel="noreferrer" data-i18n="officialSite">Official Site</a>
+            <a class="button" href="https://www.wcpp2026.id/ticket/" target="_blank" rel="noreferrer" data-i18n="register">Register</a>
+            <a class="button" href="https://maps.app.goo.gl/AuRJ98EiJpHQAy5V6" target="_blank" rel="noreferrer" data-i18n="openMap">Open Map</a>
+            <a class="button" href="https://apps.wcpp2026.id/invite/" target="_blank" rel="noreferrer" data-i18n="invitationLetter">Invitation Letter</a>
+          </div>
+        </div>
+
+        <div class="cta-box">
+          <strong data-i18n="contactBoxTitle">Kontak</strong>
+          <p>
+            mail@wcpp2026.id<br>
+            WhatsApp: +62 852-8554-7470
+          </p>
+          <div class="source-strip">
+            <span>
+              Sumber isi booklet:
+              <a href="https://www.wcpp2026.id/" target="_blank" rel="noreferrer">wcpp2026.id</a>,
+              <a href="https://www.wcpp2026.id/docs/entry-information-for-participants/" target="_blank" rel="noreferrer">entry guide</a>,
+              <a href="https://bali-airport.com/en/public-transport/index" target="_blank" rel="noreferrer">Ngurah Rai public transport</a>.
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <p class="footer-note" data-i18n="footerNote">
+        Rekomendasi lanjutan: masukkan logo resmi WCPP, foto Bali resolusi tinggi, dan jika panitia sudah final,
+        tambahkan detail shuttle hotel atau route transfer resmi agar booklet ini siap publish.
+      </p>
+    </section>
+  </main>
+
+  <script src="./script.js"></script>
 </body>
 </html>
